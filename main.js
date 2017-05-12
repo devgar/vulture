@@ -19,7 +19,7 @@ const Twit = require('twit');
 
 const T = new Twit(require('./config.json'));
 
-var stream = T.stream('statuses/filter', { follow: [1622741658, '3065926623'] });
+var stream = T.stream('statuses/filter', { follow: [85646556, 160571292, 90886814] });
 
 stream.on('tweet', tweet => {
   if(tweet.in_reply_to_status_id) return;

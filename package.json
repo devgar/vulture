@@ -14,5 +14,8 @@
     "twitter"
   ],
   "author": "Edgar ALbalate <dev.gardo@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "twit": "^2.2.5"
+  }
 }
