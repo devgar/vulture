@@ -1,5 +1,7 @@
 "use strict";
 
+var searchKey = require('./config.json').key;
+
 function random ( n ) { return Math.round(Math.random() * n); };
 
 function chckentities ( tweet, user ){
@@ -19,7 +21,9 @@ const Twit = require('twit');
 
 const T = new Twit(require('./config.json').login );
 
-var stream = T.stream('statuses/filter', { follow: require('./config.json').follow });
+var stream = T.stream('statuses/filter',{
+  follow: require('./config.json').follow,
+});
 
 stream.on('tweet', tweet => {
   if(tweet.in_reply_to_status_id) return;
@@ -27,11 +31,24 @@ stream.on('tweet', tweet => {
   if(!chckentities(tweet, require('./config.json').key)) return;
 
   setTimeout( ()=> {
-    T.post('statuses/retweet/:id', { id: tweet.id_str },
-    (err, data, response) => {
-      if(err) return console.log('ERR:', err);
-      console.log('Retweeted', tweet.id, '=>', data.id, '\n');
+    T.post('statuses/retweet/:id', { id: tweet.id_str })
+    .catch( err => console.log('ERR:', err))
+    .then( (data, response) => {
+      console.log('RT', tweet.id, '=>', data.data.id);
     });
   }, 1000 + random(10000));
 
+});
+
+var targets = [searchKey, searchKey+'4', searchKey+'5'];
+var stream2 = T.stream('statuses/filter', {
+  track: targets
+});
+
+stream2.on('tweet', tweet => {
+  setTimeout( ()=> {
+    T.post('favorites/create', { id: tweet.id_str })
+    .catch( err => console.log("ERR", err, '\n') )
+    .then( (data, res) => console.log('FAV', data.data.id, '\n') );
+  }, random(5000));
 });
