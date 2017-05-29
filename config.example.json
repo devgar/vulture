@@ -1,0 +1,14 @@
+{
+  "login": {
+    "consumer_key": "YOUR-APP-CONSUMER-KEY",
+    "consumer_secret": "YOUR-APP-CONSUMER-SECRET",
+    "access_token": "YOUR-USER-ACCESS-TOKEN",
+    "access_token_secret": "YOUR-USER-TOKEN-SECRET"
+  },
+  "follow" : [
+    "85646556",
+    "160571292"
+  ],
+  "key" : "TAGWORD"
+
+}
